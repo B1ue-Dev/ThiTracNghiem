@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bảng điểm môn học</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            color: #000;
+            line-height: 1.4;
+            background: #fff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        /* Khi xem preview trên web (iframe), tạo khoảng cách giả lập viền tờ giấy */
+        @media screen {
+            body {
+                padding: 20mm 15mm;
+            }
+        }
+        /* Khi xuất PDF, bỏ padding đi vì @page đã lo việc đó */
+        @media print {
+            body {
+                padding: 0;
+            }
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .school-name {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .report-title {
+            font-size: 18pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 15px 0;
+        }
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 12pt;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 0.8pt solid #000;
+        }
+        th, td {
+            border: 0.8pt solid #000;
+            padding: 8px;
+            text-align: left;
+            font-size: 11pt;
+            outline: 0.8pt solid #000;
+            outline-offset: -0.8pt;
+        }
+        tbody tr {
+            border-bottom: 0.8pt solid #000;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
+        }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+            font-size: 12pt;
+        }
+        .signature {
+            text-align: center;
+            width: 200px;
+        }
+        .sign-title { font-weight: bold; margin-bottom: 60px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="report-title">BẢNG ĐIỂM</div>
+    </div>
+
+    <div class="meta-info">
+        <div>
+            <div><strong>Lớp:</strong> {{tenLop}}</div>
+            <div><strong>Môn học:</strong> {{tenMH}}</div>
+            <div><strong>Lần thi:</strong> {{lanThi}}</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="5%">STT</th>
+                <th width="15%">Mã SV</th>
+                <th width="30%">Họ</th>
+                <th width="15%">Tên</th>
+                <th width="10%">Điểm</th>
+                <th width="25%">Điểm chữ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each students}}
+            <tr>
+                <td class="text-center">{{STT}}</td>
+                <td class="text-center">{{MASV}}</td>
+                <td>{{HO}}</td>
+                <td>{{TEN}}</td>
+                <td class="text-center"><strong>{{DIEM}}</strong></td>
+                <td class="text-center">{{DIEM_CHU}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>

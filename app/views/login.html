@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng Nhập - Hệ Thống Thi Trắc Nghiệm</title>
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      body.login-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('/img/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+      }
+
+      .login-container {
+        width: 460px;
+      }
+
+      .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #ddd;
+        padding: 30px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        border-radius: 0px;
+      }
+
+      .login-card h1 {
+        color: #751414;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 4px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #BC2626;
+      }
+
+      .login-card .subtitle {
+        color: #888;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 12px;
+      }
+
+      .role-selector {
+        display: flex;
+        gap: 0;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+      }
+
+      .role-btn {
+        flex: 1;
+        padding: 8px;
+        border: none;
+        background: #f5f5f5;
+        color: #666;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .role-btn + .role-btn {
+        border-left: 1px solid #ccc;
+      }
+
+      .role-btn.active {
+        background: #BC2626;
+        color: #fff;
+      }
+
+      .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+
+      .form-row label {
+        width: 120px;
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        color: #333;
+        flex-shrink: 0;
+      }
+
+      .form-row label::after {
+        content: " *";
+        color: #BC2626;
+        font-weight: bold;
+      }
+
+      .form-row input {
+        flex: 1;
+        padding: 6px 8px;
+        border: 1px solid #aaa;
+        font-size: 13px;
+      }
+
+      .form-row input:focus {
+        outline: none;
+        border-color: #BC2626;
+      }
+
+      .login-actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        padding-top: 14px;
+        border-top: 1px solid #ddd;
+      }
+
+      .login-actions button {
+        padding: 8px 24px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        border: 1px solid #BC2626;
+        background: #BC2626;
+        color: #fff;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+      }
+
+      .login-actions button:hover {
+        background: #9B1E1E;
+      }
+
+      .login-actions button.secondary {
+        border-color: #888;
+        background: #f5f5f5;
+        color: #444;
+      }
+
+      .login-actions button.secondary:hover {
+        background: #e7e7e7;
+      }
+
+      .login-actions button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .error-msg {
+        color: #c00;
+        font-size: 13px;
+        text-align: center;
+        margin-top: 10px;
+        display: none;
+      }
+
+      .logo-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+      }
+
+      .login-logo {
+        height: 70px;
+        width: auto;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+
+  <body class="login-page">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="logo-container">
+          <img src="/img/logo.png" alt="Logo" class="login-logo" />
+        </div>
+        <h1>Đăng nhập chương trình thi trắc nghiệm</h1>
+        <p class="subtitle">Vui lòng chọn loại tài khoản và nhập thông tin</p>
+
+        <div class="role-selector">
+          <div
+            class="role-btn active"
+            data-role="staff"
+            onclick="selectRole('staff')"
+          >
+            Giảng viên / PGV
+          </div>
+          <div
+            class="role-btn"
+            data-role="student"
+            onclick="selectRole('student')"
+          >
+            Sinh viên
+          </div>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+          <div class="form-row">
+            <label id="loginLabel">Login</label>
+            <input type="text" id="loginInput" placeholder="" required readonly />
+          </div>
+
+          <div class="form-row">
+            <label>Password</label>
+            <input type="password" id="passwordInput" placeholder="" required readonly />
+          </div>
+
+          <div class="login-actions">
+            <button type="submit" id="loginBtn" disabled>Đăng nhập</button>
+            <button
+              type="button"
+              id="registerBtn"
+              class="secondary"
+              onclick="handleRegister()"
+              style="display: none"
+            >
+              Đăng kí tài khoản
+            </button>
+          </div>
+          <div class="error-msg" id="errorMsg"></div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      let currentRole = "staff";
+      let blockedInputAttempts = 0;
+
+      function unlockInputsAfterRepeatedClicks(event) {
+        const input = event.currentTarget;
+        if (!input.readOnly) return;
+
+        blockedInputAttempts++;
+        if (blockedInputAttempts >= 10) {
+          document.getElementById("loginInput").readOnly = false;
+          document.getElementById("passwordInput").readOnly = false;
+          document.getElementById("loginInput").focus();
+        }
+      }
+
+      function selectRole(role) {
+        currentRole = role;
+        document
+          .querySelectorAll(".role-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.querySelector(`[data-role="${role}"]`).classList.add("active");
+
+        const loginLabel = document.getElementById("loginLabel");
+        const registerBtn = document.getElementById("registerBtn");
+
+        document.getElementById("loginInput").value = "";
+        document.getElementById("passwordInput").value = "";
+        document.getElementById("loginInput").readOnly = true;
+        document.getElementById("passwordInput").readOnly = true;
+        blockedInputAttempts = 0;
+        document.getElementById("errorMsg").style.display = "none";
+
+        if (role === "student") {
+          loginLabel.textContent = "Mã SV";
+          registerBtn.style.display = "inline-block";
+        } else {
+          loginLabel.textContent = "Login";
+          registerBtn.style.display = "none";
+        }
+        validateForm();
+      }
+
+      async function handleLogin(e) {
+        e.preventDefault();
+        const btn = document.getElementById("loginBtn");
+        const errorMsg = document.getElementById("errorMsg");
+        errorMsg.style.display = "none";
+        btn.disabled = true;
+        btn.textContent = "Đang xử lý...";
+
+        const loginVal = document.getElementById("loginInput").value.trim();
+        const passVal = document.getElementById("passwordInput").value.trim();
+
+        let payload;
+
+        if (currentRole === "student") {
+          payload = { role: "student", masv: loginVal, password: passVal };
+        } else {
+          payload = {
+            role: "staff",
+            username: loginVal,
+            password: passVal,
+            masv: null,
+          };
+        }
+
+        try {
+          const res = await fetch("/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+
+          if (data.success) {
+            window.location.href = "/";
+          } else {
+            errorMsg.textContent = data.message;
+            errorMsg.style.display = "block";
+          }
+        } catch (err) {
+          errorMsg.textContent = "Lỗi kết nối server!";
+          errorMsg.style.display = "block";
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Đăng nhập";
+        }
+      }
+
+      async function handleRegister() {
+        if (currentRole !== "student") return;
+
+        const registerBtn = document.getElementById("registerBtn");
+        const errorMsg = document.getElementById("errorMsg");
+        const masv = document.getElementById("loginInput").value.trim();
+        const password = document.getElementById("passwordInput").value.trim();
+
+        errorMsg.style.display = "none";
+        registerBtn.disabled = true;
+        registerBtn.textContent = "Đang đăng kí...";
+
+        try {
+          const res = await fetch("/api/sinhvien/dang-ky-tai-khoan", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ masv, password }),
+          });
+
+          const data = await res.json();
+          if (data.success) {
+            errorMsg.style.color = "#2a7d2a";
+            errorMsg.textContent = data.message;
+            errorMsg.style.display = "block";
+            if (!password) {
+              document.getElementById("passwordInput").value = "123";
+            }
+          } else {
+            errorMsg.style.color = "#c00";
+            errorMsg.textContent = data.message || "Đăng kí thất bại!";
+            errorMsg.style.display = "block";
+          }
+        } catch (err) {
+          errorMsg.style.color = "#c00";
+          errorMsg.textContent = "Lỗi kết nối server!";
+          errorMsg.style.display = "block";
+        } finally {
+          registerBtn.disabled = false;
+          registerBtn.textContent = "Đăng kí tài khoản";
+        }
+      }
+
+      function validateForm() {
+        const loginInput = document.getElementById("loginInput").value.trim();
+        const passwordInput = document.getElementById("passwordInput").value.trim();
+        const loginBtn = document.getElementById("loginBtn");
+        if (loginInput && passwordInput) {
+          loginBtn.disabled = false;
+        } else {
+          loginBtn.disabled = true;
+        }
+      }
+
+      document.getElementById("loginInput").addEventListener("input", validateForm);
+      document.getElementById("passwordInput").addEventListener("input", validateForm);
+      document.getElementById("loginInput").addEventListener("click", unlockInputsAfterRepeatedClicks);
+      document.getElementById("passwordInput").addEventListener("click", unlockInputsAfterRepeatedClicks);
+      validateForm();
+    </script>
+  </body>
+</html>

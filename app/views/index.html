@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Thi Trắc Nghiệm</title>
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img class="logo" src="/img/logo.png" alt="Logo" />
+                <h2>Thi Trắc Nghiệm</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <!-- Được render bằng JS dựa trên role -->
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info" id="userInfo"></div>
+                <button class="logout-btn" onclick="handleLogout()">Đăng xuất</button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h1 id="pageTitle">Trang chủ</h1>
+                <div class="top-bar-right">
+                    <span id="roleTag" class="role-tag"></span>
+                </div>
+            </header>
+            <div class="content-area" id="contentArea">
+                <div class="welcome-card">
+                    <h2>Chào mừng đến với Hệ thống Thi Trắc Nghiệm</h2>
+                    <p>Chọn chức năng từ menu bên trái để bắt đầu.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL template -->
+    <div class="modal-overlay" id="modalOverlay" style="display:none;">
+        <div class="modal" id="modalContent"></div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/pages.js"></script>
+    <script src="/js/pages/monhoc.js"></script>
+    <script src="/js/pages/lop.js"></script>
+    <script src="/js/pages/sinhvien.js"></script>
+    <script src="/js/pages/giaovien.js"></script>
+    <script src="/js/pages/cauhoi.js"></script>
+    <script src="/js/pages/dangkythi.js"></script>
+    <script src="/js/pages/bangdiem.js"></script>
+    <script src="/js/pages/taotaikhoan.js"></script>
+    <script src="/js/exam.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

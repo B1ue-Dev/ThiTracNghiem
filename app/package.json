@@ -1,0 +1,29 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node app-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@jsreport/jsreport-chrome-pdf": "^4.4.1",
+    "@jsreport/jsreport-core": "^4.10.0",
+    "@jsreport/jsreport-express": "^4.3.2",
+    "@jsreport/jsreport-handlebars": "^4.1.1",
+    "@jsreport/jsreport-html-to-xlsx": "^4.4.1",
+    "@jsreport/jsreport-text": "^4.1.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "handlebars": "^4.7.9",
+    "mssql": "^12.2.1",
+    "puppeteer": "^24.42.0"
+  }
+}
